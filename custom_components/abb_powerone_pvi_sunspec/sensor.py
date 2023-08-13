@@ -49,10 +49,10 @@ async def async_setup_entry(hass, entry, async_add_entities):
         add_sensor_defs(hub_name, hub, device_info, entities, SENSOR_TYPES_SINGLE_PHASE)
     elif hub.data["invtype"] == INVERTER_TYPE[103]:
         add_sensor_defs(hub_name, hub, device_info, entities, SENSOR_TYPES_THREE_PHASE)
+
     # TODO: check if this check is good for all devices
-    # I dont know if all multi mppt will return 0 but on mine this worked fine
-    _LOGGER.debug("(sensor) DC Voltages : single=%d dc1=%d dc2=%d", hub.data["dcvolt"], hub.data["dc1volt"], hub.data["dc2volt"])
-    if hub.data["dcvolt"] != 0:
+    _LOGGER.debug("(sensor) DC Voltages : mppt_nr=%d single=%d dc1=%d dc2=%d", hub.data["mppt_nr"], hub.data["dcvolt"], hub.data["dc1volt"], hub.data["dc2volt"])
+    if hub.data["mppt_nr"] == 1:
         add_sensor_defs(hub_name, hub, device_info, entities, SENSOR_TYPES_SINGLE_MPPT)
     else:
         add_sensor_defs(hub_name, hub, device_info, entities, SENSOR_TYPES_MULTIPLE_MPPT)
